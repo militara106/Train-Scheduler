@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+
+<html lang="en-us">
+
+<head>
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+    <!--CSS Style Sheet-->
+    <link rel="stylesheet" type="text/css" href="assets/style.css">
+
+    <meta charset="UTF-8">
+    <title>Train Scheduler</title>
+
+</head>
+
+<body>
+    <!-- CSS Grid Start -->
+    <div class="header">
+        <h1>Anytime is Train</h1>
+        <h4>Choo Choo. Chee Chee.</h4>
+    </div>
+    <div class="gridContainer">
+        <!-- Schedule (Top Card) -->
+        <div class="card card1">
+            <div class="card-header">
+                Current Train Schedule
+            </div>
+            <table id="currentTrain">
+                <tr>
+                    <th>Train Name</th>
+                    <th>Destination</th>
+                    <th>Frequency (min)</th>
+                    <th>Next Arrival</th>
+                    <th>Minutes Away</th>
+                </tr>
+            </table>
+        </div>
+        <!-- Input Form (Bottom Card) -->
+        <div class="card card2">
+            <div class="card-header">
+                Add Train
+            </div>
+            <div id="cardContent">
+                <form>
+                    <p>Train Name</p>
+                    <input type="text" name="name" id="input-name">
+                    <p>Destination</p>
+                    <input type="text" name="role" id="input-destination">
+                    <p>First Train Time (HH:mm - military time)</p>
+                    <input type="text" name="start" id="input-time">
+                    <p>Frequency (min)</p>
+                    <input type="text" name="rate" id="input-frequency">
+                    <div class="submit">
+                        <input type="submit" value="Search" id="submit">
+                    </div>
+                </form>
+            </div>
+        </div>
+        <!-- CSS Grid End -->
+    </div>
+
+    <!-- Moment -->
+    <script src="https://unpkg.com/moment"></script>
+
+    <!-- The core Firebase JS SDK is always required and must be listed first -->
+    <!-- Firebase References -->
+    <script src="https://www.gstatic.com/firebasejs/6.3.3/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/6.3.3/firebase-database.js"></script>
+
+    <!-- External JQuery-->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+    <script src="assets/app.js"></script>
+
+
+
+</body>
+
+</html>
