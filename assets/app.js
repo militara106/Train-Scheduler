@@ -102,8 +102,13 @@ $(document).ready(function () {
 
         // $("#currentTrian").append(row);
 
-        console.log("DATA PULLED-------------------------"+childSnapshot.val().name);
+        console.log("DATA PULLED-------------------------" + childSnapshot.val().name);
+        console.log("Destination: " + childSnapshot.val().destination);
+        console.log("Frequency: " + childSnapshot.val().frequency);
+
+
         tNext = childSnapshot.val().time;
+        console.log("First Train: " + tNext);
         tNext = moment(tNext, "HH:mm").format("HH:mm");
         tFreq = childSnapshot.val().frequency;
 
@@ -111,11 +116,17 @@ $(document).ready(function () {
         while (moment(tNext, "HH:mm") < moment()) {
             tNext = moment(tNext, "HH:mm").add(tFreq, "minutes");
         }
-        tNext = moment(tNext, "HH:mm").format("HH:mm");
+        if (moment(tNext, "HH:mm") > moment("23:59", "HH:mm")) {
+            tNext = "Tomorrow at " + childSnapshot.val().time;
+        } 
+        else {
+            tNext = moment(tNext, "HH:mm").format("HH:mm");
+        }
         console.log("Calculated next arrival: " + tNext);
-        
+
         // Calculate minutes away
         tAway = moment(tNext, "HH:mm").diff(moment(), "minutes");
+        tAway = Math.abs(tAway);
         console.log("Minutes Away: " + tAway);
 
         var row = $("<tr>");
