@@ -58,14 +58,20 @@ $(document).ready(function () {
             console.log("First Train: " + tTime);
             console.log("Frequency Input: " + tFreq);
 
-            // Calculate next arrival
-            tNext = tTime;
+            // Calculate Next Arrival
             while (moment(tNext, "HH:mm") < moment()) {
                 tNext = moment(tNext, "HH:mm").add(tFreq, "minutes");
-                console.log("Calculating next arrival: " + moment(tNext).format("HH:mm"));
             }
+            if (moment(tNext, "HH:mm") > moment("23:59", "HH:mm")) {
+                tNext = "Tomorrow at " + childSnapshot.val().time;
+            } else {
+                tNext = moment(tNext, "HH:mm").format("HH:mm");
+            }
+            console.log("Calculated next arrival: " + tNext);
+
             // Calculate minutes away
             tAway = moment(tNext, "HH:mm").diff(moment(), "minutes");
+            tAway = Math.abs(tAway);
             console.log("Minutes Away: " + tAway);
 
             // Push to database
@@ -87,21 +93,8 @@ $(document).ready(function () {
     });
 
     database.ref().on("child_added", function (childSnapshot) {
-        // Log everything that's coming out of snapshot
 
-        // var array = [childSnapshot.val().name, childSnapshot.val().destination, childSnapshot.val().frequency, tNext, tAway];
-
-        // var row = $("<tr>");
-
-        // for (var i = 0; i < array.length; i++) {
-        //     console.log(array[i]);
-        //     var cell = $("<td>");
-        //     $(cell).text(array[i]);
-        //     $(row).append(cell);
-        // }
-
-        // $("#currentTrian").append(row);
-
+        // Log Data
         console.log("DATA PULLED-------------------------" + childSnapshot.val().name);
         console.log("Destination: " + childSnapshot.val().destination);
         console.log("Frequency: " + childSnapshot.val().frequency);
@@ -118,8 +111,7 @@ $(document).ready(function () {
         }
         if (moment(tNext, "HH:mm") > moment("23:59", "HH:mm")) {
             tNext = "Tomorrow at " + childSnapshot.val().time;
-        } 
-        else {
+        } else {
             tNext = moment(tNext, "HH:mm").format("HH:mm");
         }
         console.log("Calculated next arrival: " + tNext);
@@ -129,6 +121,7 @@ $(document).ready(function () {
         tAway = Math.abs(tAway);
         console.log("Minutes Away: " + tAway);
 
+        // Create Objects
         var row = $("<tr>");
         var cell1 = $("<td>");
         var cell2 = $("<td>");
@@ -136,6 +129,7 @@ $(document).ready(function () {
         var cell4 = $("<td>");
         var cell5 = $("<td>");
 
+        // Add data to rows
         $(cell1).text(childSnapshot.val().name);
         $(cell2).text(childSnapshot.val().destination);
         $(cell3).text(childSnapshot.val().frequency);
@@ -148,7 +142,9 @@ $(document).ready(function () {
         $(row).append(cell4);
         $(row).append(cell5);
 
+        // Add row to container
         $("#currentTrain").append(row);
+        
         // Handle the errors
     }, function (errorObject) {
         console.log("Errors handled: " + errorObject.code);
