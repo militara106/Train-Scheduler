@@ -102,15 +102,18 @@ $(document).ready(function () {
 
         // $("#currentTrian").append(row);
 
-        console.log("Data Pulled");
+        console.log("DATA PULLED-------------------------"+childSnapshot.val().name);
         tNext = childSnapshot.val().time;
+        tNext = moment(tNext, "HH:mm").format("HH:mm");
         tFreq = childSnapshot.val().frequency;
 
         // Calculate Next Arrival
         while (moment(tNext, "HH:mm") < moment()) {
             tNext = moment(tNext, "HH:mm").add(tFreq, "minutes");
-            console.log("Calculating next arrival: " + moment(tNext).format("HH:mm"));
         }
+        tNext = moment(tNext, "HH:mm").format("HH:mm");
+        console.log("Calculated next arrival: " + tNext);
+        
         // Calculate minutes away
         tAway = moment(tNext, "HH:mm").diff(moment(), "minutes");
         console.log("Minutes Away: " + tAway);
@@ -125,7 +128,7 @@ $(document).ready(function () {
         $(cell1).text(childSnapshot.val().name);
         $(cell2).text(childSnapshot.val().destination);
         $(cell3).text(childSnapshot.val().frequency);
-        $(cell4).text(moment(tNext).format("HH:mm"));
+        $(cell4).text(tNext);
         $(cell5).text(tAway);
 
         $(row).append(cell1);
